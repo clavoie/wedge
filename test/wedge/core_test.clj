@@ -9,11 +9,12 @@
   (call-a t))
 
 (deftest def-stub-not-called-test
-  (def-stub [counter call-a]
+  ;; maybe should be def-stub [counter a]
+  (def-stub counter call-a
     (is-called? counter 0)))
 
 (deftest def-stub-called-once-test
-  (def-stub [counter call-a]
+  (def-stub counter call-a
     (is-called? counter 0 0)
     (is (= 1 (call-b 0)))
     (is-called? counter 0)

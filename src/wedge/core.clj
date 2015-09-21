@@ -13,5 +13,5 @@
 (defmacro def-stub [counter fn-name & body]
   `(let [~counter (atom {})
          origin-fn# ~fn-name]
-     (with-redefs [~fn-name (fn [& args] (swap! ~counter add-call args) (apply origin-fn# args))]
+     (with-redefs [~fn-name (fn [& args#] (swap! ~counter add-call args#) (apply origin-fn# args#))]
        ~@body)))
