@@ -14,7 +14,6 @@
   ([one] (call-b one 2))
   ([one two] (call-b one two)))
 
-
 (deftest def-stub-not-called-test
   ;; maybe should be def-stub [counter a]
   (def-stub [call-a counter]
