@@ -4,10 +4,16 @@
    [clojure.inspector :refer [atom?]]))
 
 (defn assert-fn-args
+  "Asserts that a fn-args parameter is of the correct type. Raises an error if it is not.
+
+  fn-args - the fn args parameter to verify"
   [fn-args]
   (assert (coll? fn-args) "fn-args parameter must be a collection"))
 
 (defn assert-fn-counter-map
+  "Asserts that a fn-counter-map parameter is of the correct type. Raises an error if it is not
+
+  fn-counter-map - the fn counter map parameter to verify"
   [fn-counter-map]
   (assert (map? fn-counter-map) "fn-counter-map parameter must be an atom containing a map"))
 
