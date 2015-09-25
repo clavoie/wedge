@@ -14,6 +14,8 @@
   ([one] (call-b one 2))
   ([one two] (call-b one two)))
 
+(println (macroexpand '(called? c [1 2 ? 4])))
+
 (deftest def-stub-not-called-test
   ;; maybe should be def-stub [counter a]
   (def-stub [call-a counter]
@@ -30,3 +32,5 @@
     (is (= (called counter [0 1]) 1))
     (is (= 1 (call-b 0 1)))
     (is (= (called counter [0 1]) 2)))))
+
+;; (called [? 1])
