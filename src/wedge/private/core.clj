@@ -8,3 +8,13 @@
   (if-let [entry (get counter args)]
     (assoc counter args (inc entry))
     (assoc counter args 1)))
+
+(defn are-equal [preds args]
+  (if (= (count preds) (count args))
+    (every? true?
+            (for [[pred arg] (partition 2 (interleave preds args))]
+              (pred arg)))))
+
+(defn sum-counts [counter preds]
+  (assert (map? counter) "The counter must be a map")
+  (apply + (for [[args call-count] counter :when (are-equal preds args)] call-count)))

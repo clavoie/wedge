@@ -10,7 +10,15 @@
 (defn called
   [counter arg-fns]
   (assert (atom? counter) "Counter parameter must be an atom")
-  (get @counter args 0))
+  (get @counter arg-fns 0))
+
+(defmacro called? [counter args]
+  (let [args (for [a args]
+               ; (type a)
+               (if (= '? a) '(fn [_] true)
+                 `(fn [b#] (= b# ~a)))
+               )]
+    `(private/sum-counts (deref ~counter) ~(vec args))))
 
 (defmacro def-stub [bindings & body]
   (assert (vector? bindings) "The bindings for def-stub must be a vector")
