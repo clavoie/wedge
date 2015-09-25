@@ -9,14 +9,14 @@
     (is (= {args 2} (add-call counter args)))
     (is (= {args 1 args2 1} (add-call counter args2)))))
 
-(deftest are-equal-tests
+(deftest matches-fn-call-tests
   (let [eq-1 #(= 1 %)
         eq-2 #(= 2 %)
         eq-3 #(= 3 %)
         eq-t (fn [_] true)]
-    (is (are-equal [eq-1 eq-2 eq-3] [1 2 3]))
-    (is (are-equal [eq-1 eq-t eq-3] [1 2 3]))
-    (is (not (are-equal [eq-1 eq-2 eq-3] [1 5 3])))))
+    (is (matches-fn-call [eq-1 eq-2 eq-3] [1 2 3]))
+    (is (matches-fn-call [eq-1 eq-t eq-3] [1 2 3]))
+    (is (not (matches-fn-call [eq-1 eq-2 eq-3] [1 5 3])))))
 
 (deftest sum-counts-tests
   (let [eq-1 #(= 1 %)

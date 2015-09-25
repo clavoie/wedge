@@ -37,7 +37,7 @@
     (assoc fn-counter-map fn-args (inc entry))
     (assoc fn-counter-map fn-args 1)))
 
-(defn are-equal
+(defn matches-fn-call
   "Tests that all the predicates match a fn call, returning true if they do and falsy if they do not. Predicates will be called on the fn args in order.
   The first pred will be called on the first arg, the second pred on the second arg, and so forth
 
@@ -56,5 +56,5 @@
   preds      - a sequence of fns that take a single parameter and return true if the fn call arg should be included in the fn call count, or falsy otherwise"
   [fn-counter-map preds]
   (assert-fn-counter-map fn-counter-map)
-  (apply + (for [[fn-args call-count] fn-counter-map :when (are-equal preds fn-args)] call-count)))
+  (apply + (for [[fn-args call-count] fn-counter-map :when (matches-fn-call preds fn-args)] call-count)))
 
