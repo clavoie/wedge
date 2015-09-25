@@ -1,5 +1,6 @@
 (ns wedge.core
   (:require
+   [clojure.inspector :refer [atom?]]
    [clojure.test :as t]
    [wedge.private.core :as private]))
 
@@ -8,7 +9,8 @@
 ;; called?
 
 (defn is-called? [counter args times]
-  (let [fn-called (get counter args 0)]
+  (assert (atom? counter) "C m u")
+  (let [fn-called (get @counter args 0)]
     (t/is (= fn-called times))))
 
 (defmacro def-stub [bindings & body]
