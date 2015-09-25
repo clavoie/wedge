@@ -1,17 +1,15 @@
 (ns wedge.core
   (:require
    [clojure.inspector :refer [atom?]]
-   [clojure.test :as t]
    [wedge.private.core :as private]))
 
-;; called-<
-;; called->
-;; called?
+(defn not-called? [counter]
+  (empty? @counter))
 
-(defn is-called? [counter args times]
+(defn called
+  [counter args]
   (assert (atom? counter) "C m u")
-  (let [fn-called (get @counter args 0)]
-    (t/is (= fn-called times))))
+  (get @counter args 0))
 
 (defmacro def-stub [bindings & body]
   (assert (vector? bindings) "The bindings for def-stub must be a vector")
