@@ -7,7 +7,7 @@ Function call verification for use with clojure.test
 
 Add the following dependency to your `project.clj` file:
 
-[![Clojars Project](http://clojars.org/lock-key/latest-version.svg)](http://clojars.org/wedge)
+[![Clojars Project](http://clojars.org/wedge/latest-version.svg)](http://clojars.org/wedge)
 
 ## Usage
 
