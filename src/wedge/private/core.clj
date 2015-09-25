@@ -8,9 +8,3 @@
   (if-let [entry (get counter args)]
     (assoc counter args (inc entry))
     (assoc counter args 1)))
-
-(defn get-redef-bindings [fn-name counter-name]
-  )
-
-(defn get-bindings [bindings]
-  )

@@ -3,24 +3,14 @@
    [clojure.inspector :refer [atom?]]
    [wedge.private.core :as private]))
 
-(defn not-called? [counter]
+(defn not-called?
+  [counter]
   (empty? @counter))
 
 (defn called
   [counter arg-fns]
-  (assert (atom? counter) "C m u")
-
-  (filter @counter #(let [[k] %]))
-
+  (assert (atom? counter) "Counter parameter must be an atom")
   (get @counter args 0))
-
-(defmacro called? [counter args]
-  (let [args (for [a args]
-               ; (type a)
-               (if (= '? a) '(fn [a#] true)
-                 `(fn [b#] (= b# ~a)))
-               )]
-    `(called ~counter ~args)))
 
 (defmacro def-stub [bindings & body]
   (assert (vector? bindings) "The bindings for def-stub must be a vector")
