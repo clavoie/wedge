@@ -21,7 +21,8 @@
     (call-b 0 2)
     (is (= (called? counter [? ?]) 2))
     (is (= (called? counter [? 2]) 1))
-    (is (= (called? counter [0 2]) 1))))
+    (is (= (called? counter [0 2]) 1))
+    (is (= (called? counter [0 [? #(> % 1)]]) 1))))
 
 (deftest def-stub-not-called-test
   (def-stub [call-a counter]

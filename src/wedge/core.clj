@@ -14,10 +14,10 @@
 
 (defmacro called? [counter args]
   (let [args (for [a args]
-               ; (type a)
-               (if (= '? a) '(fn [_] true)
-                 `(fn [b#] (= b# ~a)))
-               )]
+               (cond
+                (and (vector? a) (= (count a) 2) (= '? (first a))) (second a)
+                (= '? a) '(fn [_] true)
+                true `(fn [b#] (= b# ~a))))]
     `(private/sum-counts (deref ~counter) ~(vec args))))
 
 (defmacro def-stub [bindings & body]
