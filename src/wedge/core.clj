@@ -1,4 +1,5 @@
 (ns wedge.core
+  "Function call verification for use with clojure.test"
   (:require
    [clojure.inspector :refer [atom?]]
    [wedge.private.core :as private]))
