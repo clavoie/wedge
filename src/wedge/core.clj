@@ -11,6 +11,14 @@
   (private/assert-fn-counter fn-counter)
   (empty? @counter))
 
+(defn total-calls
+  "Counts all calls to the fn, regardless of the arguments passed to it
+
+  fn-counter - the counter which tracks the number of times a specific fn is called while within a with-wedge binding"
+  [fn-counter]
+  (private/assert-fn-counter fn-counter)
+  (apply + (vals @fn-counter)))
+
 (defmacro call-count
   "Counts the number of times a fn has been called within a with-wedge binding for a certain set of arguments to the fn.
 
