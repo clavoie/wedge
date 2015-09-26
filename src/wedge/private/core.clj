@@ -1,7 +1,5 @@
 (ns wedge.private.core
-  "Private functions for wedge.core. Do not reference symbols in this ns as they are subject to change"
-  (:require
-   [clojure.inspector :refer [atom?]]))
+  "Private functions for wedge.core. Do not reference symbols in this ns as they are subject to change")
 
 (defn assert-fn-args
   "Asserts that a fn-args parameter is of the correct type. Raises an error if it is not.
@@ -22,20 +20,8 @@
 
   fn-counter - the fn counter parameter to verify"
   [fn-counter]
-  (assert (atom? fn-counter) "fn-counter parameter must be an atom")
+  (assert (instance? clojure.lang.Atom fn-counter) "fn-counter parameter must be an atom")
   (assert-fn-counter-map @fn-counter))
-
-(defn add-call
-  "Records a fn call to a fn counter map, returning the new fn-counter map with the updated fn call counts.
-
-  fn-counter-map - the map containing the number of times a fn has been called with certain parameters
-  fn-args        - the vector containing the args with which the fn under test was called"
-  [fn-counter-map fn-args]
-  (assert-fn-counter-map fn-counter-map)
-  (assert-fn-args fn-args)
-  (if-let [entry (get fn-counter-map fn-args)]
-    (assoc fn-counter-map fn-args (inc entry))
-    (assoc fn-counter-map fn-args 1)))
 
 (defn matches-fn-call
   "Tests that all the predicates match a fn call, returning true if they do and falsy if they do not. Predicates will be called on the fn args in order.
@@ -48,6 +34,18 @@
     (every? true?
             (for [[pred fn-arg] (partition 2 (interleave preds fn-args))]
               (pred fn-arg)))))
+
+(defn record-fn-call
+  "Records a fn call to a fn counter map, returning the new fn-counter map with the updated fn call counts.
+
+  fn-counter-map - the map containing the number of times a fn has been called with certain parameters
+  fn-args        - the vector containing the args with which the fn under test was called"
+  [fn-counter-map fn-args]
+  (assert-fn-counter-map fn-counter-map)
+  (assert-fn-args fn-args)
+  (if-let [entry (get fn-counter-map fn-args)]
+    (assoc fn-counter-map fn-args (inc entry))
+    (assoc fn-counter-map fn-args 1)))
 
 (defn sum-counts
   "Sums all the times a fn was called for the given set of argument predicates. Returns the total number of times a fn was called while under test

@@ -29,6 +29,6 @@
     (let [[fn-name counter] bindings]
       `(let [~counter (atom {})
              origin-fn# ~fn-name]
-         (with-redefs [~fn-name (fn [& args#] (swap! ~counter ~private/add-call args#) (apply origin-fn# args#))]
+         (with-redefs [~fn-name (fn [& args#] (swap! ~counter ~private/record-fn-call args#) (apply origin-fn# args#))]
            (def-stub [~@(vec (drop 2 bindings))]
              ~@body))))))
