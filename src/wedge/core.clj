@@ -62,8 +62,8 @@
     ))
 
   bindings - a vector defining a relationship between a fn which should be tracked and an object which will track the calls to the fn. There must be an even number of symbols in
-            the binding vector. The first symbol in the binding vector must be the name of a fn to track calls to, the second symbol in the vector must be a name for the object
-            to track the calls to the fn.
+             the binding vector. The first symbol in the binding vector must be the name of a fn to track calls to, the second symbol in the vector must be a name for the object
+             to track the calls to the fn.
   body     - the body of the test
   "
   [bindings & body]
