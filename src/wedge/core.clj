@@ -3,13 +3,13 @@
   (:require
    [wedge.private.core :as private]))
 
-(defn not-called?
-  "Tests that a fn is not called at all, for any set of parameters. Returns true if the fn is not called inside the with-wedge binding, and false otherwise
+(defn called?
+  "Tests that a fn is called at all, for any set of parameters. Returns true if the fn is called inside the with-wedge binding, and false otherwise
 
   fn-counter - the counter which tracks the number of times a specific fn is called while within a with-wedge binding"
   [fn-counter]
   (private/assert-fn-counter fn-counter)
-  (empty? @counter))
+  (not-empty @fn-counter))
 
 (defn total-calls
   "Counts all calls to the fn, regardless of the arguments passed to it
@@ -74,6 +74,6 @@
     (let [[fn-name fn-counter] bindings]
       `(let [~fn-counter (atom {})
              origin-fn# ~fn-name]
-         (with-redefs [~fn-name (fn [& args#] (swap! ~fn-counter ~private/record-fn-call args#) (apply origin-fn# args#))]
-           (def-stub [~@(vec (drop 2 bindings))]
+         (with-redefs [~fn-name (fn [& args#] (swap! ~fn-counter ~private/record-fn-call (if (nil? args#) [] args#)) (apply origin-fn# args#))]
+           (with-wedge [~@(vec (drop 2 bindings))]
              ~@body))))))

@@ -6,19 +6,45 @@
   (+ one two))
 
 (defn call-b [one two]
-  (call-a one two))
+  (call-a (inc one) (inc two)))
 
 (defn call-c
-  ([] (call-b 1 2))
-  ([one] (call-b one 2))
+  ([] (call-c 1 2))
   ([one two] (call-b one two)))
 
-(deftest call-count-tests
+(deftest called?-tests
   (with-wedge [call-a a-counter]
-    (is (= (call-count a-counter [? ?]) 0))
-    (call-b 0 1)
-    (call-b 0 2)
-    (is (= (call-count a-counter [? ?]) 2))
-    (is (= (call-count a-counter [? 2]) 1))
-    (is (= (call-count a-counter [0 2]) 1))
-    (is (= (call-count a-counter [0 [? #(> % 1)]]) 1))))
+    (is (not (called? a-counter)))
+    (is (= 3 (call-a 1 2)))
+    (is (called? a-counter))))
+
+(deftest total-calls-tests
+  (with-wedge [call-a a-counter]
+    (is (zero? (total-calls a-counter)))
+    (is (= 3 (call-a 1 2)))
+    (is (= 1 (total-calls a-counter)))
+    (is (= 7 (call-a 3 4)))
+    (is (= 2 (total-calls a-counter)))))
+
+(deftest call-count-tests
+  (with-wedge [call-a a-counter
+               call-b b-counter
+               call-c c-counter]
+    (is (= 5 (call-c)))
+    (is (= 7 (call-a 2 5)))
+
+    (is (= 1 (call-count c-counter [])))
+    (is (= 1 (call-count c-counter [1 2])))
+    (is (= 1 (call-count c-counter [1 ?])))
+    (is (= 1 (call-count c-counter [1 [? #(even? %)]])))
+    (is (zero? (call-count c-counter [1 [? #(odd? %)]])))
+
+    (is (= 1 (call-count b-counter [1 2])))
+    (is (= 1 (call-count b-counter [? 2])))
+    (is (= 1 (call-count b-counter [1 [? #(even? %)]])))
+    (is (zero? (call-count b-counter [1 [? #(odd? %)]])))
+
+    (is (= 1 (call-count a-counter [2 3])))
+    (is (= 2 (call-count a-counter [2 ?])))
+    (is (= 2 (call-count a-counter [2 [? #(odd? %)]])))
+    (is (zero? (call-count a-counter [1 [? #(even? %)]])))))
