@@ -1,4 +1,4 @@
-(defproject wedge "1.0.0-SNAPSHOT"
+(defproject wedge "1.0.0"
   :description "Function call verification for use with clojure.test"
   :url "https://github.com/clavoie/wedge"
   :license {:name "Eclipse Public License"
