@@ -45,7 +45,7 @@ Add the following dependency to your `project.clj` file:
 
 [API](http://clavoie.github.io/wedge/)
 
-## Rational
+## Rationale
 
 Often times our code is composed of fns for which there are already tests. Assertions, validations, helper functions, etc. When writing a test
 for a top level fn, or a fn composed of other fns for which their are already tests, we don't want to attempt to test the logic in the
