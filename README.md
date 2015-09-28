@@ -32,11 +32,23 @@ Add the following dependency to your `project.clj` file:
   (with-wedge [assert-some-param assert-counter
                helper-fn helper-counter]
     (is (= 9 (main-fn 2)))
+    
+    ;; was assert-some-param called at all?
     (is (called? assert-counter))
+    
     (is (= 1 (main-fn 1)))
+    
+    ;; count the total number of times helper-fn was called
     (is (= 2 (total-calls helper-counter)))
+    
+    ;; count the total number of times helper-fn was call with '1' for both arguments
     (is (= 1 (call-count helper-counter [1 1])))
+    
+    ;; count the total number of times helper-fn was call with '1' for the first argument
     (is (= 2 (call-count helper-counter [1 ?])))
+    
+    ;; count the total number of times helper-fn was call with '1' for the first argument and any
+    ;; second argument greater than 0
     (is (= 2 (call-count helper-counter [1 [? #(< 0 %)]])))))
 
 ```
