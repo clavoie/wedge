@@ -47,8 +47,8 @@ Add the following dependency to your `project.clj` file:
     ;; count the total number of times helper-fn was call with '1' for the first argument
     (is (= 2 (call-count helper-counter [1 ?])))
     
-    ;; count the total number of times helper-fn was call with '1' for the first argument and any
-    ;; second argument greater than 0
+    ;; count the total number of times helper-fn was call with '1' for the first argument
+    ;;  and any second argument greater than 0
     (is (= 2 (call-count helper-counter [1 [? #(< 0 %)]])))))
 
 ```
